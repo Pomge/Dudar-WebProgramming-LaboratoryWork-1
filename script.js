@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    let API_KEY = "AIzaSyDQRiqO5is72nsTWToxQFViEPROBkL1TDY"
+    let API_KEY = "AIzaSyCjcDZhSq-PuhkztilnXPn_U5666JC00bs"
 
     $("#form").submit(function (event) {
         event.preventDefault()
@@ -9,23 +9,20 @@ $(document).ready(function () {
         if (maxResults === "") {
             maxResults = 9
         }
-        let showStatistics = $("#showStatistics")[0].checked
+        let orderBy = $("#orderBy option:selected").val()
+        console.log(orderBy)
 
-        videoSearch(API_KEY, searchRequest, maxResults, showStatistics)
+        videoSearch(API_KEY, searchRequest, maxResults, orderBy)
     })
 
-    function videoSearch(API_KEY, searchQuery, maxResults, showStatistics) {
+    function videoSearch(API_KEY, searchQuery, maxResults, orderBy) {
         $("#videos").empty()
-
-        let getQuery
-        if (showStatistics) {
-            getQuery = "&part=snippet&part=statistics"
-        } else getQuery = "&part=snippet"
 
         $.get("https://youtube.googleapis.com/youtube/v3/search?" +
             "key=" + API_KEY +
-            getQuery +
+            "&part=snippet" +
             "&type=video" +
+            "&order=" + orderBy +
             "&maxResults=" + maxResults +
             "&q=" + searchQuery, function (data) {
             console.log(data)
@@ -33,13 +30,10 @@ $(document).ready(function () {
             data.items.forEach(item => {
                 let videoId = item.id.videoId
                 let video =
-                    '<div>' +
                     '<iframe width="370" height="210" ' +
                     'src="https://www.youtube.com/embed/' + videoId + '" ' +
                     'frameborder="0" allowfullscreen>' +
-                    '</iframe>' +
-                    '<p></p>'
-                    '</div>'
+                    '</iframe>'
                 $("#videos").append(video)
             })
         })
