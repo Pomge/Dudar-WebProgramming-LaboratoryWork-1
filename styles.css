@@ -1,0 +1,16 @@
+.form {
+    overflow: hidden;
+}
+
+.btn-danger {
+    width: 100%;
+}
+
+.title {
+    margin-top: 1em;
+    text-align: center;
+}
+
+.number-input {
+    margin-bottom: 1em;
+}
